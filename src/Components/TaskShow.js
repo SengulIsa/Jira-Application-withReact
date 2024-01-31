@@ -1,16 +1,22 @@
 import {useState} from 'react';
 import TaskCreate from './TaskCreate';
-function TaskShow({task,onDelete,onUpdate}) {
+import {useContext} from 'react';
+import taskContext from '../Context/Tasks';
+
+function TaskShow({task}) {
+    const {editTaskById,DeleteTaskById} = useContext(taskContext);
     const [showEdit, setShowEdit] = useState(false)
     const handleClickDelete=()=>{
-        onDelete(task.id);
+       // onDelete(task.id);   props used in this line
+       DeleteTaskById(task.id);  // with context api
     };
     const handleClickUpdate=()=>{
         setShowEdit(!showEdit);
     }
     const handlesubmit=(id,updatedTittle,updatedTaskDesc)=>{
         setShowEdit(false);
-        onUpdate(id,updatedTittle,updatedTaskDesc);
+       // onUpdate(id,updatedTittle,updatedTaskDesc);  props used
+       editTaskById(id,updatedTittle,updatedTaskDesc); // context api
     }
 
     

@@ -1,6 +1,9 @@
 import {useState} from 'react';
+import {useContext} from 'react';
+import taskContext from '../Context/Tasks';
 
-function TaskCreate({onCreate,task,taskFormUpdate,onUpdate}) {
+function TaskCreate({task,taskFormUpdate,onUpdate}) {
+    const {createTask} = useContext(taskContext);
     const [tittle, setTittle] = useState(task ? task.tittle : '');
     const [taskDesc, setTaskDesc] = useState(task ? task.taskDesc : '');
 
@@ -13,10 +16,12 @@ function TaskCreate({onCreate,task,taskFormUpdate,onUpdate}) {
     const handlesubmit=(event)=>{
         event.preventDefault();
         if(taskFormUpdate){
-            onUpdate(task.id,tittle,taskDesc);
+           onUpdate(task.id,tittle,taskDesc);  //made with props
+          //  editTaskById(task.id,tittle,taskDesc); // made with context api
         }
         else{
-            onCreate(tittle,taskDesc);
+          //  onCreate(tittle,taskDesc); made with props
+          createTask(tittle,taskDesc); // made with context api
         }
         
         setTittle('');
